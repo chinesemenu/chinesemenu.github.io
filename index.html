@@ -832,10 +832,10 @@
         </div>
     </section>
 
-    <section class="tech-showcase section-image">
+    <section class="science section-image">
         <h2 style="text-align: center; margin-bottom: 2rem;">Research-Validated Technology</h2>
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <div class="tech-showcase" style="text-align: left;">
+        <div style="max-width: 1200px; margin: 0 auto;">            
+            <div class="tech-showcase">
                 <div class="tech-content">
                     <h3>Smart Retrofit Solution</h3>
                     <p>Our monitoring system combines scientific understanding with advanced technology:</p>
@@ -848,9 +848,6 @@
                     </ul>
                 </div>
                 <div class="tech-image">
-                    <!-- Mobile Dashboard - 800x600px
-                    Midjourney Prompt: "/imagine mobile app interface showing rodent activity dashboard, dark theme, professional UI design, data visualization, graphs and heatmaps --ar 4:3"
-                    -->
                     <img src="images/EverSmart-2024-Rodent-Dashboard.jpg" alt="Mobile Alerts Dashboard" style="width: 100%; height: auto;">
                 </div>
             </div>
@@ -1102,8 +1099,8 @@
             </div>
             <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 6rem;">
                 <!-- Microshare Logo should be rounded -->
-                <img src="images/microshare-logo-S2.png" alt="Microshare Inc." style="height: 60px; margin-bottom: 2rem; border-radius: 50%;">
-                <img src="images/eversmart-logo-S.png" alt="EverSmart® Rodent" style="height: 60px; margin-bottom: 2rem;">
+                <img src="images/logo-microshare-S.png" alt="Microshare Inc." style="height: 60px; margin-bottom: 2rem; border-radius: 50%;">
+                <img src="images/logo-eversmart-S.png" alt="EverSmart® Rodent" style="height: 60px; margin-bottom: 2rem;">
             </div>
             <div style="display: flex; justify-content: center; gap: 2rem;">
                 <p style="font-size: 1.2rem; ">Exclusive New England provider of EverSmart® Rodent solutions</p>
@@ -1214,11 +1211,14 @@
             </div>
             <div class="contact-form">
                 <form id="contactForm" onsubmit="handleSubmit(event)">
-                    <input type="text" name="name" placeholder="Name" required>
-                    <input type="email" name="email" placeholder="Work Email" required>
-                    <input type="text" name="organization" placeholder="Organization" required>
-                    <input type="text" name="jobTitle" placeholder="Job Title" required>
-                    <select name="industry" style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" name="name" placeholder="Name *" required>
+                    <input type="email" name="email" placeholder="Work Email *" required 
+                           pattern="[^\s@]+@[^\s@]+\.[^\s@]+" 
+                           title="Please enter a valid email address">
+                    <input type="text" name="organization" placeholder="Organization">
+                    <input type="text" name="jobTitle" placeholder="Job Title">
+                    <select name="industry" 
+                            style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
                         <option value="">Select Your Industry</option>
                         <option value="biotech">Biotech Research</option>
                         <option value="healthcare">Healthcare</option>
@@ -1226,7 +1226,8 @@
                         <option value="lab">Laboratory Animal Science</option>
                         <option value="other">Other Regulated Industry</option>
                     </select>
-                    <textarea name="message" placeholder="Message (including any specific compliance requirements)" rows="5" required></textarea>
+                    <textarea name="message" placeholder="Message (including any specific compliance requirements)" 
+                              rows="5"></textarea>
                     <button type="submit" class="cta-button">Send Message</button>
                     <p id="formStatus" style="margin-top: 1rem; text-align: center; display: none;"></p>
                 </form>
@@ -1240,8 +1241,15 @@
     </footer>
 
     <script>
-        const API_URL = 'https://airobo.requestcatcher.com/test';
-        const API_TOKEN = 'YOUR_BEARER_TOKEN';
+        const API_URL = 'https://api.microshare.io/share/io.microshare.contact.alert';
+        const API_TOKEN = 'b50590e1a70f45c1778ddfb971ef80e5c1fe8a2e5a9172efc78e617d55a6d1da';
+
+        // Add before the form handler
+        function validateEmail(email) {
+            // Basic email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
 
         async function handleSubmit(event) {
             event.preventDefault();
@@ -1250,51 +1258,93 @@
             const statusElement = document.getElementById('formStatus');
             const submitButton = form.querySelector('button[type="submit"]');
             
+            // Clear any previous status messages
+            statusElement.style.display = 'none';
+            statusElement.innerHTML = '';
+            
+            // Validate email
+            const emailInput = form.email;
+            if (!validateEmail(emailInput.value)) {
+                statusElement.style.display = 'block';
+                statusElement.style.color = 'red';
+                statusElement.textContent = 'Please enter a valid email address';
+                emailInput.focus();
+                return;
+            }
+            
             // Disable the submit button and show loading state
             submitButton.disabled = true;
             submitButton.innerHTML = 'Sending...';
             
-            // Collect form data
-            const formData = {
-                name: form.name.value,
-                email: form.email.value,
-                organization: form.organization.value,
-                jobTitle: form.jobTitle.value,
-                industry: form.industry.value,
-                message: form.message.value,
-                timestamp: new Date().toISOString(),
-                source: 'website_contact_form'
+            // Build the request body following the template structure
+            const requestBody = {
+                "alert": "contact",
+                "change": 1,
+                "current": {
+                    "assignee": ["sales@rodentsciences.com"],
+                    "contact": {
+                        "name": form.name.value,
+                        "email": form.email.value,
+                        "organization": form.organization.value,
+                        "jobTitle": form.jobTitle.value,
+                        "industry": form.industry.value,
+                        "message": form.message.value,
+                        "time": new Date().toISOString()
+                    },
+                    "notification": {
+                        "title": "New Contact Form Submission",
+                        "body": `New inquiry from ${form.name.value} at ${form.organization.value}`
+                    },
+
+                },
+                "event": "form_submission",
+                "meta": {
+                    "source": {
+                        "id": crypto.randomUUID(),
+                        "recType": "com.rodentsciences.contact.form"
+                    }
+                },
+                "solution": "rodent"
             };
 
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${API_TOKEN}`
                     },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify(requestBody)
                 });
 
-                // Since we're using no-cors, we won't get response details
-                // So we'll assume success if we get here
+                // Move this check before any other response handling
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const responseData = await response.json();
+                
+                if (!responseData || responseData.error) {
+                    throw new Error(responseData?.error || 'Failed to submit form');
+                }
+
                 statusElement.style.display = 'block';
                 statusElement.style.color = 'green';
                 statusElement.textContent = 'Thank you! We will be in touch soon.';
                 
                 // Reset the form
-                form.reset();
+                // form.reset();
 
             } catch (error) {
                 console.error('Error:', error);
                 
-                // Show error message
                 statusElement.style.display = 'block';
                 statusElement.style.color = 'red';
-                statusElement.textContent = 'Sorry, there was an error sending your message. Please try again later.';
+                statusElement.innerHTML = `
+                    Sorry, there was an error sending your message. <br>
+                    Please try again or call us at <a href="tel:15085658051" style="color: var(--accent-color);">1 (508) 565-8051</a>
+                `;
             } finally {
-                // Re-enable the submit button
                 submitButton.disabled = false;
                 submitButton.innerHTML = 'Send Message';
             }
