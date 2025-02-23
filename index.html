@@ -5,12 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rodent Sciences - Advanced Rodent Monitoring Solutions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2C3E50;
             --secondary-color: #3498DB;
             --accent-color: #E74C3C;
             --light-bg: #F8F9FA;
+            
+            /* Font families */
+            --font-primary: 'Inter', sans-serif;
+            --font-headings: 'Montserrat', sans-serif;
+            --font-nav: 'Poppins', sans-serif;
+            --font-buttons: 'Montserrat', sans-serif;
+            --font-hero: 'Montserrat', sans-serif;
+            --font-cards: 'Inter', sans-serif;
+            
+            /* Font weights */
+            --weight-normal: 400;
+            --weight-medium: 500;
+            --weight-semibold: 600;
+            --weight-bold: 700;
+            --weight-extrabold: 800;
         }
 
         * {
@@ -20,9 +38,13 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: var(--font-primary);
             line-height: 1.6;
             color: var(--primary-color);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-headings);
         }
 
         .hero {
@@ -73,14 +95,16 @@
 
         .hero-content h1 {
             font-size: 3.5rem;
-            font-weight: 800;
+            font-weight: var(--weight-extrabold);
             letter-spacing: -1px;
             margin-bottom: 1rem;
+            font-family: var(--font-hero);
         }
 
         .hero-content p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
+            font-family: var(--font-hero);
         }
 
         .cta-button {
@@ -90,6 +114,7 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             border: 2px solid var(--accent-color);
+            font-family: var(--font-buttons);
         }
 
         .cta-button:hover {
@@ -106,19 +131,21 @@
             font-size: 2.2rem;
             margin-bottom: 3rem;
             position: relative;
-            display: inline-block;
+            text-align: center;
+            width: 100%;
+            display: block;
         }
 
         section h2:after {
             content: '';
             position: absolute;
             bottom: -10px;
-            left: 0;
-            right: 0;
+            left: 50%;
+            transform: translateX(-50%);
             height: 3px;
             background: var(--accent-color);
             width: 60px;
-            margin: 0 auto;
+            margin: 0;
         }
 
         .features {
@@ -154,12 +181,14 @@
             font-size: 1.3rem;
             margin-bottom: 0.8rem;
             color: var(--primary-color);
+            font-family: var(--font-cards);
         }
 
         .feature-card p {
             font-size: 0.95rem;
             line-height: 1.5;
             color: #666;
+            font-family: var(--font-cards);
         }
 
         .technology {
@@ -300,6 +329,7 @@
             text-decoration: none;
             font-size: 1.5rem;
             font-weight: bold;
+            font-family: var(--font-nav);
         }
 
         .nav-links {
@@ -313,6 +343,7 @@
             transition: color 0.3s;
             position: relative;
             padding: 0.5rem 0;
+            font-family: var(--font-nav);
         }
 
         .nav-links a:hover {
@@ -365,21 +396,40 @@
         .section-dark {
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), var(--section-bg, url('global-map-bg.jpg'));
             background-size: cover;
-            color: white;
-            padding: 5rem 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 3rem 2rem;
         }
 
         .section-dark .feature-card {
             background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .section-dark .feature-card h3 {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .section-dark .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .section-dark .feature-card i {
             color: var(--accent-color);
         }
 
+        .section-dark h2 {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .section-dark .tech-content h3,
+        .section-dark .tech-content p,
+        .section-dark .tech-content li {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
         .section-light {
             background: var(--light-bg);
-            padding: 5rem 2rem;
+            padding: 2.5rem 2rem;
         }
 
         /* Update existing feature-card styles */
@@ -399,16 +449,20 @@
         .testimonial-item {
             position: relative;
             background: linear-gradient(45deg, white, #f8f9fa);
+            display: flex;
+            flex-direction: column;
+            min-height: 300px; /* Set a minimum height */
         }
 
-        .testimonial-item:before {
-            content: '"';
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 8rem;
-            color: rgba(0,0,0,0.05);
-            font-family: serif;
+        .testimonial-item .testimonial-content {
+            flex: 1; /* Takes up remaining space */
+            padding: 1.5rem;
+        }
+
+        .testimonial-author {
+            margin-top: auto; /* Pushes the author section to the bottom */
+            padding: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
 
         .testimonial-carousel {
@@ -428,9 +482,32 @@
             opacity: 1;
             transition: opacity 0.3s ease;
             background: white;
-            padding: 2rem;
+            padding: .5rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+                /* Update testimonial item styles */
+        .testimonial-item p {
+            font-size: 1rem;
+            font-style: italic;
+            /* margin-bottom: 1.5rem; */
+        }
+
+        .testimonial-item .author-name {
+            font-weight: bold;
+            /* margin-bottom: 0.5rem; */
+        }
+
+        .testimonial-item .author-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            /* margin-bottom: 1rem; */
+        }
+
+        .testimonial-item .profile-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            /* margin-bottom: 1rem; */
         }
 
         @keyframes slideTestimonials {
@@ -440,7 +517,7 @@
         }
 
         .testimonial-track {
-            animation: slideTestimonials 15s infinite;
+            animation: slideTestimonials 30s infinite;
         }
 
         .testimonial-track:hover {
@@ -500,6 +577,183 @@
                 padding: 0 1rem;
             }
         }
+
+        /* Font Test Variations */
+        .font-test-a {
+            /* Modern Tech + Classic */
+            --font-primary: 'Inter', sans-serif;
+            --font-headings: 'Spectral', serif;
+            --font-nav: 'Inter', sans-serif;
+            --font-buttons: 'Inter', sans-serif;
+            --font-hero: 'Spectral', serif;
+            --font-cards: 'Inter', sans-serif;
+        }
+
+        .font-test-b {
+            /* Clean Professional */
+            --font-primary: 'Source Sans Pro', sans-serif;
+            --font-headings: 'Source Serif Pro', serif;
+            --font-nav: 'Source Sans Pro', sans-serif;
+            --font-buttons: 'Source Sans Pro', sans-serif;
+            --font-hero: 'Source Serif Pro', serif;
+            --font-cards: 'Source Sans Pro', sans-serif;
+        }
+
+        .font-test-c {
+            /* Modern Scientific */
+            --font-primary: 'Space Grotesk', sans-serif;
+            --font-headings: 'Space Grotesk', sans-serif;
+            --font-nav: 'Space Grotesk', sans-serif;
+            --font-buttons: 'Space Grotesk', sans-serif;
+            --font-hero: 'Space Grotesk', sans-serif;
+            --font-cards: 'Space Grotesk', sans-serif;
+        }
+
+        .font-test-d {
+            /* Premium Tech */
+            --font-primary: 'DM Sans', sans-serif;
+            --font-headings: 'Fraunces', serif;
+            --font-nav: 'DM Sans', sans-serif;
+            --font-buttons: 'DM Sans', sans-serif;
+            --font-hero: 'Fraunces', serif;
+            --font-cards: 'DM Sans', sans-serif;
+        }
+
+        .font-test-e {
+            /* Modern Research */
+            --font-primary: 'Albert Sans', sans-serif;
+            --font-headings: 'Sora', sans-serif;
+            --font-nav: 'Albert Sans', sans-serif;
+            --font-buttons: 'Sora', sans-serif;
+            --font-hero: 'Sora', sans-serif;
+            --font-cards: 'Albert Sans', sans-serif;
+        }
+
+        /* Update Google Fonts import URL */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Source+Serif+Pro:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=Fraunces:wght@400;600;700&family=Albert+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap');
+
+        /* Add these styles */
+        .info-tooltip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: help;
+        }
+
+        .info-tooltip .info-icon {
+            color: var(--accent-color);
+            font-size: 1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-tooltip:hover .info-icon {
+            opacity: 1;
+        }
+
+        .info-tooltip .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            width: max-content;
+            max-width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .info-tooltip:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 10px);
+        }
+
+        .info-tooltip .tooltip-content::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: rgba(44, 62, 80, 0.95) transparent transparent transparent;
+        }
+
+        /* Add these modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .industry-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .industry-card:hover {
+            transform: translateY(-5px);
+        }
+
     </style>
 </head>
 <body>
@@ -517,6 +771,15 @@
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
+            <!-- Add social proof metrics above main heading -->
+            <div class="hero-metrics" style="margin-bottom: 2rem;">
+                <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 5px; margin: 0 0.5rem;">
+                    <strong>500+</strong> Facilities Protected
+                </span>
+                <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 5px; margin: 0 0.5rem;">
+                    <strong>99.9%</strong> Uptime
+                </span>
+            </div>
             <h1>Rodent Sciences</h1>
             <p>Certified Provider of EverSmart® Rodent Solutions</p>
             <p style="font-size: 1.2rem; margin-top: 1rem;">Proven Results: Up to 56% Reduction in Rodent Activity</p>
@@ -597,20 +860,51 @@
     <section class="industries section-dark">
         <h2 style="text-align: center; margin-bottom: 2rem;">Industry Solutions</h2>
         <div class="features-grid">
-            <div class="feature-card">
+            <div class="feature-card industry-card" onclick="openModal('research-modal')">
                 <i class="fas fa-flask"></i>
                 <h3>Research & Healthcare</h3>
                 <p>GLP and Joint Commission compliant monitoring for laboratories and healthcare facilities</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card industry-card" onclick="openModal('food-modal')">
                 <i class="fas fa-industry"></i>
                 <h3>Food Production</h3>
                 <p>FSMA and HACCP-compatible monitoring systems for food safety compliance</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card industry-card" onclick="openModal('animal-modal')">
                 <i class="fas fa-paw"></i>
                 <h3>Animal Facilities</h3>
                 <p>AAALAC-compliant monitoring for research animal facility management</p>
+            </div>
+        </div>
+
+        <!-- Add modals -->
+        <div id="research-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('research-modal')">&times;</button>
+                <h3>Research & Healthcare Compliance</h3>
+                <p>Our advanced monitoring system streamlines GLP compliance by providing continuous, automated documentation of pest control measures. The system maintains detailed records of all monitoring activities, making audit preparation significantly more efficient and comprehensive.</p>
+                <p>For healthcare facilities, Joint Commission standards require robust pest management programs. Our solution provides real-time monitoring and automated alerts, ensuring rapid response to any potential issues while maintaining the sterile environment necessary for patient care.</p>
+                <p>The integration of AI-powered analytics helps identify patterns and potential risk areas before they become compliance issues. This proactive approach, combined with detailed reporting capabilities, helps maintain continuous compliance with regulatory requirements while reducing the administrative burden on staff.</p>
+            </div>
+        </div>
+
+        <div id="food-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('food-modal')">&times;</button>
+                <h3>Food Production Compliance</h3>
+                <p>In food production environments, FSMA compliance requires preventive controls and detailed monitoring of pest activity. Our system provides continuous surveillance and documentation, ensuring that your facility meets and exceeds these requirements through automated record-keeping and real-time alerts.</p>
+                <p>For HACCP compliance, our monitoring system integrates seamlessly into your existing critical control points. The platform automatically documents all pest control measures and monitoring activities, providing the detailed records necessary for HACCP verification and validation procedures.</p>
+                <p>The system's predictive analytics help identify potential pest-related hazards before they impact production, while automated reporting ensures all necessary documentation is maintained for inspections and audits. This comprehensive approach significantly reduces the time and effort required for compliance management.</p>
+            </div>
+        </div>
+
+        <div id="animal-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('animal-modal')">&times;</button>
+                <h3>Animal Facility Compliance</h3>
+                <p>AAALAC compliance requires comprehensive pest control programs with regular monitoring and documentation. Our system automates this process, providing continuous surveillance and detailed records of all pest control activities, ensuring compliance with AAALAC's stringent requirements for animal facility management.</p>
+                <p>The platform's advanced sensors and AI analytics help maintain the specific environmental conditions necessary for research animal facilities. Real-time monitoring ensures immediate detection and response to any potential pest issues, protecting both the research subjects and the integrity of ongoing studies.</p>
+                <p>Automated documentation and reporting capabilities streamline the compliance process, making it easier to demonstrate adherence to AAALAC standards during inspections and reviews. The system's predictive analytics help prevent pest-related issues before they can impact research operations or animal welfare.</p>
             </div>
         </div>
     </section>
@@ -639,77 +933,121 @@
 
     <!-- Group 4 -->
     <section class="testimonials section-dark">
-        <h2 style="text-align: center; margin-bottom: 2rem;">What Our Clients Say</h2>
+        <h2 style="text-align: center; margin-bottom: 2rem;">What People Are Saying</h2>
+        <!-- Add credibility enhancers above testimonials -->
+        <div class="certification-bar" style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
+            <span class="info-tooltip">
+                <img src="images/cert-soc2.jpg" alt="SOC 2 Type II Certified" style="height: 60px;">
+                <i class="fas fa-info-circle info-icon"></i>
+                <span class="tooltip-content">
+                    SOC 2 Type II certification ensures our service meets the highest standards for security, availability, and confidentiality of customer data.
+                </span>
+            </span>
+            <span class="info-tooltip">
+                <img src="images/cert-fda.png" alt="FDA 21 CFR Part 11 Compliant" style="height: 60px;">
+                <i class="fas fa-info-circle info-icon"></i>
+                <span class="tooltip-content">
+                    FDA 21 CFR Part 11 compliance ensures our electronic systems meet FDA requirements for electronic records and signatures in regulated environments.
+                </span>
+            </span>
+            <span class="info-tooltip">
+                <img src="images/cert-aaalac.jpg" alt="AAALAC Accredited" style="height: 60px;">
+                <i class="fas fa-info-circle info-icon"></i>
+                <span class="tooltip-content">
+                    AAALAC accreditation demonstrates our commitment to responsible animal care and use, meeting international standards for research animal facility management.
+                </span>
+            </span>
+        </div>
         <div class="testimonial-carousel">
             <div class="testimonial-track">
                 <!-- First set of 3 -->
                 <div class="testimonial-item">
-                    <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
-                        "The automated reporting has transformed our compliance process. What used to take hours of manual documentation is now generated automatically."
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
-                        <div>
-                            <p style="font-weight: bold; color: var(--primary-color);">Sarah Chen, Ph.D.</p>
-                            <p style="color: var(--primary-color);">Research Facility Manager</p>
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            "The automated reporting has transformed our compliance process. What used to take hours of manual documentation is now generated automatically."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
+                            <div>
+                                <p style="font-weight: bold; color: var(--primary-color);">Sarah Chen, Ph.D.</p>
+                                <p style="color: var(--primary-color);">Research Facility Manager</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
-                    <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
-                        "The AI capabilities are remarkable. The system not only detects activity but predicts potential hotspots before they become problems. This predictive insight has helped us stay ahead."
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
-                        <div>
-                            <p style="font-weight: bold; color: var(--primary-color);">Dr. Michael Thompson</p>
-                            <p style="color: var(--primary-color);">Director of Operations, BioPharma Inc.</p>
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            "The AI capabilities are remarkable. The system not only detects activity but predicts potential hotspots before they become problems. This predictive insight has helped us stay ahead."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
+                            <div>
+                                <p style="font-weight: bold; color: var(--primary-color);">Dr. Michael Thompson</p>
+                                <p style="color: var(--primary-color);">Director of Operations, BioPharma Inc.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
-                    <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
-                        "Installation was incredibly smooth. The team worked around our schedule, and the system was up and running with minimal disruption to our operations."
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
-                        <div>
-                            <p style="font-weight: bold; color: var(--primary-color);">James Rodriguez</p>
-                            <p style="color: var(--primary-color);">Facilities Director, Northeast Medical Center</p>
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            "Installation was incredibly smooth. The team worked around our schedule, and the system was up and running with minimal disruption to our operations."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
+                            <div>
+                                <p style="font-weight: bold; color: var(--primary-color);">James Rodriguez</p>
+                                <p style="color: var(--primary-color);">Facilities Director, Northeast Medical</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Duplicate first set for smooth infinite loop -->
                 <div class="testimonial-item">
-                    <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
-                        "The seamless integration with our existing pest control service has been fantastic. Our PCO now has real-time data to work with, making their visits more targeted."
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
-                        <div>
-                            <p style="font-weight: bold; color: var(--primary-color);">Lisa Martinez</p>
-                            <p style="color: var(--primary-color);">Quality Assurance, Food Processing Co.</p>
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            "The seamless integration with our existing pest control service has been fantastic. Our PCO now has real-time data to work with, making their visits more targeted."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
+                            <div>
+                                <p style="font-weight: bold; color: var(--primary-color);">Lisa Martinez</p>
+                                <p style="color: var(--primary-color);">Quality Assurance, Food Processing Co.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
-                    <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
-                    <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
-                        "The data insights have revolutionized our approach to pest management. We've reduced chemical treatments by 45% while improving our capture rates."
-                    </p>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
-                        <div>
-                            <p style="font-weight: bold; color: var(--primary-color);">Robert Walsh</p>
-                            <p style="color: var(--primary-color);">Environmental Health, University Research</p>
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem; color: var(--primary-color);">
+                            "The data insights have revolutionized our approach to pest management. We've reduced chemical treatments by 45% while improving our capture rates."
+                        </p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-user-circle" style="font-size: 2.5rem; color: var(--secondary-color);"></i>
+                            <div>
+                                <p style="font-weight: bold; color: var(--primary-color);">Robert Walsh</p>
+                                <p style="color: var(--primary-color);">Environmental Health, University Research</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -742,11 +1080,8 @@
     </section>
 
     <section class="partnership section-dark">
+        <h2 style="text-align: center; margin-bottom: 2rem;">100% Certified Partner of Microshare Inc.</h2>
         <div style="max-width: 1200px; margin: 0 auto;">
-            <!-- Company Logos - 300x100px each
-            Midjourney Prompt: "/imagine minimalist corporate logo design, professional business style, clean lines, monochromatic, white background --ar 3:1"
-            -->
-            <h2>100% Certified Partner of Microshare Inc.</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-certificate" style="color: var(--accent-color); font-size: 2.5rem; margin-bottom: 1rem;"></i>
@@ -766,8 +1101,9 @@
 
             </div>
             <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 6rem;">
-                <img src="images/microshare-logo-M.png" alt="Microshare Inc." style="height: 60px; margin-bottom: 2rem;">
-                <img src="images/icon-2023-rodent-white-inline.png" alt="EverSmart® Rodent" style="height: 60px; margin-bottom: 2rem;">
+                <!-- Microshare Logo should be rounded -->
+                <img src="images/microshare-logo-S2.png" alt="Microshare Inc." style="height: 60px; margin-bottom: 2rem; border-radius: 50%;">
+                <img src="images/eversmart-logo-S.png" alt="EverSmart® Rodent" style="height: 60px; margin-bottom: 2rem;">
             </div>
             <div style="display: flex; justify-content: center; gap: 2rem;">
                 <p style="font-size: 1.2rem; ">Exclusive New England provider of EverSmart® Rodent solutions</p>
@@ -969,5 +1305,91 @@
     <div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; background: var(--secondary-color); color: white; padding: 15px; border-radius: 50%; cursor: pointer;">
         <i class="fas fa-comments"></i>
     </div>
+
+    <script>
+        // Font A/B Testing
+        function initFontTest() {
+            // Get or set the test group from localStorage
+            let testGroup = localStorage.getItem('fontTestGroup');
+            
+            if (!testGroup) {
+                // Set default to font-test-e instead of random
+                testGroup = 'font-test-e';
+                // // Randomly assign a test group if none exists
+                // testGroup = ['font-test-a', 'font-test-b', 'font-test-c', 'font-test-d', 'font-test-e'][Math.floor(Math.random() * 5)];
+                localStorage.setItem('fontTestGroup', testGroup);
+            }
+            
+            // Apply the font test class to the body
+            document.body.classList.add(testGroup);
+            
+            // Add font switcher for easy testing (remove in production)
+            // addFontSwitcher();
+        }
+
+        function addFontSwitcher() {
+            const switcher = document.createElement('div');
+            switcher.innerHTML = `
+                <div style="position: fixed; bottom: 20px; left: 20px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000;">
+                    <select id="fontSwitch" style="padding: 5px;">
+                        <option value="font-test-a">Font Set A (Inter/Spectral)</option>
+                        <option value="font-test-b">Font Set B (Source Sans Pro/Source Serif Pro)</option>
+                        <option value="font-test-c">Font Set C (Space Grotesk)</option>
+                        <option value="font-test-d">Font Set D (DM Sans/Fraunces)</option>
+                        <option value="font-test-e">Font Set E (Albert Sans/Sora)</option>
+                    </select>
+                </div>
+            `;
+            document.body.appendChild(switcher);
+
+            // Set initial value
+            document.getElementById('fontSwitch').value = localStorage.getItem('fontTestGroup');
+
+            // Add change listener
+            document.getElementById('fontSwitch').addEventListener('change', (e) => {
+                // Remove all test classes
+                document.body.classList.remove('font-test-a', 'font-test-b', 'font-test-c', 'font-test-d', 'font-test-e');
+                // Add selected class
+                document.body.classList.add(e.target.value);
+                // Save selection
+                localStorage.setItem('fontTestGroup', e.target.value);
+            });
+        }
+
+        // Initialize font testing when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initFontTest);
+    </script>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside the content
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
