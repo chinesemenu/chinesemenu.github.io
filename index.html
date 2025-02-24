@@ -310,6 +310,7 @@
 
         /* Add new styles */
         .navbar {
+            height: 80px;
             position: fixed;
             top: 0;
             left: 0;
@@ -330,6 +331,13 @@
             font-size: 1.5rem;
             font-weight: bold;
             font-family: var(--font-nav);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand img {
+            height: 100%;
         }
 
         .nav-links {
@@ -754,12 +762,31 @@
             transform: translateY(-5px);
         }
 
+        /* Add these styles */
+        .contact-logo {
+            width: 200px;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr !important; /* Override inline style */
+            }
+            
+            .contact-logo {
+                display: none; /* Hide logo on mobile */
+            }
+        }
+
     </style>
 </head>
 <body>
     <!-- Add navigation -->
     <nav class="navbar">
-        <a href="#" class="navbar-brand">Rodent Sciences</a>
+        <a href="#" class="navbar-brand" style="display: flex; align-items: center; gap: 10px; height: 100%;">
+            <img src="images/logo-rs.png" alt="Rodent Sciences" style="height: calc(100% + 2rem); margin-left: -30px;">
+            <span style="font-size: 36px; font-weight: bold; line-height: 1; margin-left: -10px;">odent Sciences</span>
+        </a>
         <div class="nav-links">
             <a href="#results" style="color: var(--accent-color);">Results</a>
             <a href="#technology" style="color: var(--accent-color);">Technology</a>
@@ -1208,6 +1235,8 @@
             <div class="contact-info">
                 <h2>Let's Talk</h2>
                 <p>Ready to transform your rodent monitoring?</p>
+                <!-- Add the logo here -->
+                <img src="images/logo-rs.png" alt="Rodent Sciences" class="contact-logo" style="width: 200px; margin-top: 2rem;">
             </div>
             <div class="contact-form">
                 <form id="contactForm" onsubmit="handleSubmit(event)">
@@ -1333,7 +1362,7 @@
                 statusElement.textContent = 'Thank you! We will be in touch soon.';
                 
                 // Reset the form
-                // form.reset();
+                form.reset();
 
             } catch (error) {
                 console.error('Error:', error);
